@@ -35,8 +35,11 @@ class checkanswer():
     def vector(A, hashtag=None):
         """Function to check matrix tipe before hashing."""
         if(type(A) is not np.matrix):
-            print(f"TypeWarning: passed variable is {type(A)} and not a numpy.matrix. Trying to convert to a array matrix using ```A = np.matrix(A).astype(float)```.\n\n")
+            print(f"TypeWarning: passed variable is {type(A)} and not a numpy.matrix. Trying to convert to a array matrix using ```A = np.matrix(A)```.\n\n")
             A = np.matrix(A).astype(float)
+        if not np.issubdtype(A.dtype, np.dtype(float).type):
+            print(f"TypeWarning: passed matrix is {A.dtype} and not {np.dtype(float).type}. Trying to convert to float using ```A = A.astype(float)```.\n\n")
+            A = A.astype(float)
         if(A.shape[0] != 1 and A.shape[1] != 1):
             assert A.shape[0] != 1 and A.shape[1] != 1,f"Matrix is not of vector format {A}"
         if(A.shape[0] != 1):
@@ -54,9 +57,12 @@ class checkanswer():
     def matrix(A, hashtag=None):
         """Function to check matrix type before hashing."""
         if(type(A) is not np.matrix):
-            print(f"TypeWarning: passed variable is {type(A)} and not a numpy.matrix. Trying to convert to a numpy matrix using ```A = np.matrix(A).astype(float)```.\n\n")
-            A = np.matrix(A).astype(float)
-            A = np.round(A, decimals=decimal_accuracy)
+            print(f"TypeWarning: passed variable is {type(A)} and not a numpy.matrix. Trying to convert to a array matrix using ```A = np.matrix(A)```.\n\n")
+            A = np.matrix(A)
+        if not np.issubdtype(A.dtype, np.dtype(float).type):
+            print(f"TypeWarning: passed matrix is {A.dtype} and not {np.dtype(float).type}. Trying to convert to float using ```A = A.astype(float)```.\n\n")
+            A = A.astype(float)
+        A = np.round(A, decimals=decimal_accuracy)
         return checkanswer.basic(A, hashtag)
 
     def matrix_equivelnt(A, hashtag=None):
