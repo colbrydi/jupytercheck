@@ -1,8 +1,21 @@
 import hashlib
 import numpy as np
 import sympy as sym
-decimal_accuracy = 5
 import sys
+
+decimal_accuracy = 5
+detailedwarnings = True
+
+#Things I fixed. Fixed Matrix rounding error
+#Added more print warnings
+
+##TODO: Fix Printwarnings
+##TODO: Fix negative zeros
+##TODO: Fix GIST error
+
+def printwarning(message):
+    if detailedwarnings:
+        print(message)
 
 class checkanswer():
 
@@ -35,19 +48,22 @@ class checkanswer():
     def vector(A, hashtag=None):
         """Function to check matrix tipe before hashing."""
         if(type(A) is not np.matrix):
-            print(f"TypeWarning: passed variable is {type(A)} and not a numpy.matrix. Trying to convert to a array matrix using ```A = np.matrix(A)```.\n\n")
+            printwarning(f"CheckWarning: passed variable is {type(A)} and not a numpy.matrix. Trying to convert to a array matrix using ```A = np.matrix(A)```.\n\n")
             A = np.matrix(A).astype(float)
         if not np.issubdtype(A.dtype, np.dtype(float).type):
-            print(f"TypeWarning: passed matrix is {A.dtype} and not {np.dtype(float).type}. Trying to convert to float using ```A = A.astype(float)```.\n\n")
+            printwarning(f"CheckWarning: passed matrix is {A.dtype} and not {np.dtype(float).type}. Trying to convert to float using ```A = A.astype(float)```.\n\n")
             A = A.astype(float)
         if(A.shape[0] != 1 and A.shape[1] != 1):
             assert A.shape[0] != 1 and A.shape[1] != 1,f"Matrix is not of vector format {A}"
         if(A.shape[0] != 1):
-            print(f"TypeWarning: numpy.matrix is row vector. Trying to convert to a column vector using ```A = A.T```.\n\n")
+            printwarning(f"CheckWarning: numpy.matrix is row vector. Trying to convert to a column vector using ```A = A.T```.\n\n")
             A = A.T
         vecsum = A.sum()
-        A = A/vecsum
+        if not vecsum == 1:
+            printwarning(f"CheckWarning: Vector sum of {A} has total value of {vecsum}. Trying to normalize to unit vector to check answer using using ```A = A/{vecsum}```.\n\n")
+            A = A/vecsum
         if(A[0,0] < 0):
+            printwarning(f"CheckWarning: First element of {A} is negative ({A[0,0]}. Trying to normalize by making this value positive using ```A = -A```.\n\n")
             A = -A
         A = np.matrix(A).astype(float)
         A = np.round(A, decimals=decimal_accuracy)
@@ -57,18 +73,21 @@ class checkanswer():
     def matrix(A, hashtag=None):
         """Function to check matrix type before hashing."""
         if(type(A) is not np.matrix):
-            print(f"TypeWarning: passed variable is {type(A)} and not a numpy.matrix. Trying to convert to a array matrix using ```A = np.matrix(A)```.\n\n")
+            printwarning(f"CheckWarning: passed variable is {type(A)} and not a numpy.matrix. Trying to convert to a array matrix using ```A = np.matrix(A)```.\n\n")
             A = np.matrix(A)
         if not np.issubdtype(A.dtype, np.dtype(float).type):
-            print(f"TypeWarning: passed matrix is {A.dtype} and not {np.dtype(float).type}. Trying to convert to float using ```A = A.astype(float)```.\n\n")
+            printwarning(f"CheckWarning: passed matrix is {A.dtype} and not {np.dtype(float).type}. Trying to convert to float using ```A = A.astype(float)```.\n\n")
             A = A.astype(float)
         A = np.round(A, decimals=decimal_accuracy)
+        if not A[A==-0].size == 0:
+            printwarning(f"CheckWarning: Matrix contains negative values for zero.  Converting to positive values of zero using  ```A[A==-0] = 0```.\n\n")
+            A[A==-0] = 0
         return checkanswer.basic(A, hashtag)
 
     def matrix_equivelnt(A, hashtag=None):
         """Function to convert matrix to reduced row echelon form and then run hashing."""
         if(type(A) is not np.matrix):
-            print(f"TypeWarning: passed variable is {type(A)} and not a numpy.matrix. Trying to convert to a numpy matrix using ```A = np.matrix(A).astype(float)```.\n\n")
+            printwarning(f"CheckWarning: passed variable is {type(A)} and not a numpy.matrix. Trying to convert to a numpy matrix using ```A = np.matrix(A).astype(float)```.\n\n")
             A = np.matrix(A).astype(float)
             A = np.round(A, decimals=decimal_accuracy)
         symA = sym.Matrix(A)
@@ -79,7 +98,7 @@ class checkanswer():
     def float(A, hashtag=None):
         """Function to check matrix type before hashing."""
         if(type(A) is not float):
-            print(f"TypeWarning: passed variable is {type(A)} and not a float. Trying to convert to a numpy matrix using ```A = float(A)```.\n\n")
+            printwarning(f"CheckWarning: passed variable is {type(A)} and not a float. Trying to convert to a numpy matrix using ```A = float(A)```.\n\n")
             A = float(A)
         A = np.round(A, decimals=decimal_accuracy)
         return checkanswer.basic(A, hashtag)
