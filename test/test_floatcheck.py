@@ -36,4 +36,15 @@ def test_float_error():
         checkanswer.float(f, '2e55d74f5c78981f6b877b198bdc61ba');
 
 
+def runall():
+    test_float()
+    test_float_roundoff()
+    test_float_array()
+    test_float_int()
+    test_float_zero()
+    test_float_negative_zero()
+    test_float_error()
+    
+if __name__ == "__main__":
+    runall()
     

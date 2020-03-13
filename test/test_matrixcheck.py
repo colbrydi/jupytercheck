@@ -11,7 +11,7 @@ def test_matrix():
     checkanswer.matrix(A, '943d90b283d21136da008160e002a5ce');
     
 def test_matrix_roundoff():
-    A = np.matrix([[1.000001, 0.000003], [0.000002, 2.0000099]])
+    A = np.matrix([[1.000001, 0.000003], [0.000002, 2.00000099]])
     checkanswer.matrix(A, '943d90b283d21136da008160e002a5ce');
 
 def test_matrix_array():
@@ -30,10 +30,20 @@ def test_matrix_negative_zero():
     A = np.matrix([[1.0, -0.0], [-0.0, 2.0]])
     checkanswer.matrix(A, '943d90b283d21136da008160e002a5ce');
     
-def test_matrix_error():
+def test_matrix_float_error():
     A = np.matrix([[3.0, 0.0], [0.0, 10.0]])
     with pytest.raises(Exception) as e_info:
         checkanswer.matrix(A, '943d90b283d21136da008160e002a5ce');
 
-
+def runall_matrix():
+    test_matrix()
+    test_matrix_roundoff()
+    test_matrix_array()
+    test_matrix_int()
+    test_matrix_sympy()
+    test_matrix_negative_zero()
+    test_matrix_float_error()
+    
+if __name__ == "__main__":
+    runall_matrix()
     
