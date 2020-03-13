@@ -11,9 +11,6 @@ detailedwarnings = True
 # Added more print warnings
 
 # TODO: Fix Printwarnings
-# TODO: Fix negative zeros
-# TODO: Fix GIST error
-
 
 def printwarning(message):
     if detailedwarnings:
@@ -52,14 +49,14 @@ class checkanswer():
         if(type(A) is not float):
             if(type(A) is list):
                 printwarning(textwrap.dedent(f"""
-                CheckWarning: passed variable is {type(A)} and not a float...
+                CheckWarning: passed variable is a list and not a float...
                     Cannot convert list to float directly. We will assume this 
                     list has only one element and covert to a numpy matrix  
                     using ```A = np.matrix(A)```.\n"""))
                 A = np.matrix(A)
             printwarning(textwrap.dedent(f"""
             CheckWarning: passed variable is {type(A)} and not a float. 
-                Trying to convert to a numpy matrix using ```A = float(A)```.\n"""))
+                Trying to convert to a float using ```A = float(A)```.\n"""))
             A = float(A)
         A = np.round(A, decimals=decimal_accuracy)
         if A == -0.00:
