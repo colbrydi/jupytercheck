@@ -72,7 +72,7 @@ class checkanswer():
             printwarning(textwrap.dedent(f"""
             CheckWarning: passed variable is {type(A)} and not a numpy.matrix. 
                 Trying to convert to a array matrix using ```A = np.matrix(A)```.\n"""))
-            A = np.matrix(A).astype(float)
+            A = np.matrix(A)
         if not np.issubdtype(A.dtype, np.dtype(float).type):
             printwarning(textwrap.dedent(f"""
             CheckWarning: passed matrix is {A.dtype} and not {np.dtype(float).type}...
@@ -98,7 +98,7 @@ class checkanswer():
             CheckWarning: First element of {A} is negative ({A[0,0]}. 
                 Trying to normalize by making this value positive using ```A = -A```.\n"""))
             A = -A
-        A = np.matrix(A).astype(float)
+#         A = np.matrix(A).astype(float)
         A = np.round(A, decimals=decimal_accuracy)
         if not A[A == -0].size == 0:
             printwarning(textwrap.dedent(f"""
@@ -127,7 +127,8 @@ class checkanswer():
             A[A == -0] = 0.00
         return checkanswer.basic(A, hashtag)
 
-    def matrix_equivelnt(A, hashtag=None):
+    #TODO: Not complete or tested.
+    def matrix_equivelent(A, hashtag=None):
         """Function to convert matrix to reduced row echelon form 
         and then run hashing."""
         if(type(A) is not np.matrix):
