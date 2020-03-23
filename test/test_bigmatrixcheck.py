@@ -56,6 +56,5 @@ def test_float_hundred_matrix():
     for i in range(100):
         for j in range(100):
             A[i][j] = random.random()
-    # print(A)
     checkanswer.basic(A,"9d9493537ead212c66cd4a77dedcaec4")
     # checkanswer.basic(A,"9d9493537ead212c66cd4a77dedcaec4")
