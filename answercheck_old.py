@@ -12,17 +12,15 @@ detailedwarnings = True
 
 # TODO: Fix Printwarnings
 
-
 def printwarning(message):
     if detailedwarnings:
         print(message)
-
 
 class checkanswer():
 
     def __init__(self, var, hashtag=None):
         checkanswer.basic(var, hashtag)
-
+        
     def basic(var, hashtag=None):
         """Fuanction that encodes answers in a string called a Hash.
         This is a one way function so a correct answer will generate the
@@ -44,7 +42,7 @@ class checkanswer():
                 print("Answer seems to be incorrect\n")
                 assert checktag == hashtag, f"Answer is incorrect {checktag}"
         else:
-            raise TypeError(f"No answer hastag provided: {checktag}")
+            raise(TypeError(f"No answer hastag provided: {checktag}"))
 
     def float(A, hashtag=None):
         """Function to check matrix type before hashing."""
@@ -74,7 +72,7 @@ class checkanswer():
             printwarning(textwrap.dedent(f"""
             CheckWarning: passed variable is {type(A)} and not a numpy.matrix. 
                 Trying to convert to a array matrix using ```A = np.matrix(A)```.\n"""))
-            A = np.matrix(A)
+            A = np.matrix(A).astype(float)
         if not np.issubdtype(A.dtype, np.dtype(float).type):
             printwarning(textwrap.dedent(f"""
             CheckWarning: passed matrix is {A.dtype} and not {np.dtype(float).type}...
@@ -82,7 +80,7 @@ class checkanswer():
             A = A.astype(float)
         if(A.shape[0] != 1 and A.shape[1] != 1):
             assert A.shape[0] != 1 and A.shape[1] != 1, \
-                f"Matrix is not of vector format {A}"
+            f"Matrix is not of vector format {A}"
         if(A.shape[0] != 1):
             printwarning(textwrap.dedent(f"""
             CheckWarning: numpy.matrix is row vector...
@@ -100,7 +98,7 @@ class checkanswer():
             CheckWarning: First element of {A} is negative ({A[0,0]}. 
                 Trying to normalize by making this value positive using ```A = -A```.\n"""))
             A = -A
-#         A = np.matrix(A).astype(float)
+        A = np.matrix(A).astype(float)
         A = np.round(A, decimals=decimal_accuracy)
         if not A[A == -0].size == 0:
             printwarning(textwrap.dedent(f"""
@@ -129,12 +127,11 @@ class checkanswer():
             A[A == -0] = 0.00
         return checkanswer.basic(A, hashtag)
 
-    # TODO: Not complete or tested.
-    def matrix_equivelent(A, hashtag=None):
+    def matrix_equivelnt(A, hashtag=None):
         """Function to convert matrix to reduced row echelon form 
         and then run hashing."""
         if(type(A) is not np.matrix):
-            printwarning(textwrap.dedent(f"""
+            printwarning(textwrap.dedent( f"""
             CheckWarning: passed variable is {type(A)} and not a numpy.matrix.
             Trying to convert to a numpy matrix using ```A = np.matrix(A).astype(float)```.\n"""))
             A = np.matrix(A).astype(float)
