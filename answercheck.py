@@ -5,7 +5,7 @@ import sys
 import textwrap
 
 decimal_accuracy = 5
-detailedwarnings = True
+# detailedwarnings = True
 
 # Things I fixed. Fixed Matrix rounding error
 # Added more print warnings
@@ -14,11 +14,12 @@ detailedwarnings = True
 
 
 def printwarning(message):
-    if detailedwarnings:
+    if checkanswer.detailedwarnings:
         print(message)
 
 
 class checkanswer():
+    detailedwarnings = True
 
     def __init__(self, var, hashtag=None):
         checkanswer.basic(var, hashtag)
@@ -52,12 +53,12 @@ class checkanswer():
             if(type(A) is list):
                 printwarning(textwrap.dedent(f"""
                 CheckWarning: passed variable is a list and not a float...
-                    Cannot convert list to float directly. We will assume this 
-                    list has only one element and covert to a numpy matrix  
+                    Cannot convert list to float directly. We will assume this
+                    list has only one element and covert to a numpy matrix
                     using ```A = np.matrix(A)```.\n"""))
                 A = np.matrix(A)
             printwarning(textwrap.dedent(f"""
-            CheckWarning: passed variable is {type(A)} and not a float. 
+            CheckWarning: passed variable is {type(A)} and not a float.
                 Trying to convert to a float using ```A = float(A)```.\n"""))
             A = float(A)
         A = np.round(A, decimals=decimal_accuracy)
@@ -72,7 +73,7 @@ class checkanswer():
         """Function to check matrix type before hashing."""
         if(type(A) is not np.matrix):
             printwarning(textwrap.dedent(f"""
-            CheckWarning: passed variable is {type(A)} and not a numpy.matrix. 
+            CheckWarning: passed variable is {type(A)} and not a numpy.matrix.
                 Trying to convert to a array matrix using ```A = np.matrix(A)```.\n"""))
             A = np.matrix(A)
         if not np.issubdtype(A.dtype, np.dtype(float).type):
@@ -92,12 +93,12 @@ class checkanswer():
         if not vecsum == 1:
             printwarning(textwrap.dedent(f"""
             CheckWarning: Vector sum of {A} has total value of {vecsum}...
-                Trying to normalize to unit vector to check answer using 
+                Trying to normalize to unit vector to check answer using
                 using ```A = A/{vecsum}```.\n\n"""))
             A = A/vecsum
         if(A[0, 0] < 0):
             printwarning(textwrap.dedent(f"""
-            CheckWarning: First element of {A} is negative ({A[0,0]}. 
+            CheckWarning: First element of {A} is negative ({A[0,0]}.
                 Trying to normalize by making this value positive using ```A = -A```.\n"""))
             A = -A
 #         A = np.matrix(A).astype(float)
@@ -131,7 +132,7 @@ class checkanswer():
 
     # TODO: Not complete or tested.
     def matrix_equivelent(A, hashtag=None):
-        """Function to convert matrix to reduced row echelon form 
+        """Function to convert matrix to reduced row echelon form
         and then run hashing."""
         if(type(A) is not np.matrix):
             printwarning(textwrap.dedent(f"""
