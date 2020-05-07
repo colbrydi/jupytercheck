@@ -69,7 +69,7 @@ class checkanswer():
             A = 0.00
         return checkanswer.basic(A, hashtag)
 
-    def vector(A, hashtag=None):
+    def make_vector(A):
         """Function to check matrix type before hashing."""
         if(type(A) is not np.matrix):
             printwarning(textwrap.dedent(f"""
@@ -89,6 +89,14 @@ class checkanswer():
             CheckWarning: numpy.matrix is row vector...
                 Trying to convert to a column vector using ```A = A.T```.\n"""))
             A = A.T
+        return A
+    
+    def vector(A, hashtag=None):
+        A = checkanswer.make_vector(A)
+        return checkanswer.basic(A, hashtag)
+    
+    def eq_vector(A, hashtag=None):
+        A = checkanswer.make_vector(A)
         vecsum = A.sum()
         if not vecsum == 1:
             printwarning(textwrap.dedent(f"""
