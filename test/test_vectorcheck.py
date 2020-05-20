@@ -36,13 +36,13 @@ def test_vector_negative_zero():
 
 def test_vector_int():
     A = [1.0, 0.0, 2.0]
-    checkanswer.eq_vector(A, '01ae20900734994659fa6cb57e3616ff');
+    checkanswer.eq_vector(A, '32afcef773e6a61d654a35be8bf14900');
     A = [1, 0, 2]
-    checkanswer.eq_vector(A, '01ae20900734994659fa6cb57e3616ff');
+    checkanswer.eq_vector(A, '32afcef773e6a61d654a35be8bf14900');
 
 def test_vector_sympy():
     A = sym.Matrix([[1.0, 0.0, 2.0]])
-    checkanswer.eq_vector(A, '01ae20900734994659fa6cb57e3616ff');
+    checkanswer.eq_vector(A, '32afcef773e6a61d654a35be8bf14900');
     
 def test_vector_float_error():
     A = np.matrix([[3.0, 0.0, 0.0, 10.0]])
