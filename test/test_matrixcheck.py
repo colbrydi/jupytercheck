@@ -35,6 +35,37 @@ def test_matrix_float_error():
     with pytest.raises(Exception) as e_info:
         checkanswer.matrix(A, '943d90b283d21136da008160e002a5ce');
 
+def test_eq_matrix():
+    A = np.matrix([[1.0, 0.0], [0.0, 2.0]])
+    checkanswer.eq_matrix(A, '16cc361c71445fb9d404292301b0a3fb')
+
+def test_scalar_eq_matrix():
+    A = np.matrix([[1, 0], [-0, 2]])
+    A2 = np.matrix(2*A)
+    checkanswer.eq_matrix(A, '16cc361c71445fb9d404292301b0a3fb')
+
+def test_swap_rows_eq_matrix():
+    A = np.matrix([[0.0, 2.0],[1.0, 0.0]])
+    checkanswer.eq_matrix(A, '16cc361c71445fb9d404292301b0a3fb')
+
+def test_swap_col_eq_matrix():
+    A = np.matrix([[2.0, 0.0],[0.0, 1.0]])
+    checkanswer.eq_matrix(A, '16cc361c71445fb9d404292301b0a3fb')
+
+def test_row_multiply_eq_matrix():
+    A = np.matrix([[1.0, 0.0], [0.0, 2.0]])
+    A = np.matrix([[4,0],[0,100]])*A
+    checkanswer.eq_matrix(A, '16cc361c71445fb9d404292301b0a3fb')
+
+def test_non_square_eq_matrix():
+    A = np.matrix([[1.0, 0.0, 2], [0.0, 2.0, 1]])
+    checkanswer.eq_matrix(A, 'b975df4d16100051030dab90f432b14b')
+
+def test_non_square_row_multiply_eq_matrix():
+    A = np.matrix([[1.0, 0.0, 2], [0.0, 2.0, 1]])
+    A = np.matrix([[4,0],[0,100]])*A
+    checkanswer.eq_matrix(A, 'b975df4d16100051030dab90f432b14b')
+        
 def runall_matrix():
     test_matrix()
     test_matrix_roundoff()
