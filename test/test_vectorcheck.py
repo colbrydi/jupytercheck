@@ -8,33 +8,41 @@ def test_init():
 
 def test_vector():
     A = np.matrix([1.0, 0.0, 2.44])
-    checkanswer.eq_vector(A, 'adc7e01b8bd1778081f6ee348b5eac8c');
+    checkanswer.vector(A, 'be281882fcabe04f0c880b70169814cd');
     
 def test_vector_roundoff():
-    A = np.matrix([[1.000001, 0.00000, 2.440000234]])
-    checkanswer.eq_vector(A, 'adc7e01b8bd1778081f6ee348b5eac8c');
+    A = np.matrix([[1.000001, 0.00000, 2.440000000234]])
+    checkanswer.vector(A, 'be281882fcabe04f0c880b70169814cd');
 
 def test_vector_array():
     A = [[1.0, 0.0, 2.44]]
-    checkanswer.eq_vector(A, 'adc7e01b8bd1778081f6ee348b5eac8c');
+    checkanswer.vector(A, 'be281882fcabe04f0c880b70169814cd');
+
+def test_vector_array():
+    A = sym.Matrix([1.0, 0.0, 2.44])
+    checkanswer.vector(A, 'be281882fcabe04f0c880b70169814cd');
 
 def test_vector_transpose():
     A = [[1.0], [0.0], [2.44]]
-    checkanswer.eq_vector(A, 'adc7e01b8bd1778081f6ee348b5eac8c');
-    
-def test_vector_int():
-    A = [1.0, 0.0, 2.0]
-    checkanswer.eq_vector(A, '6601896bef296de2c6ea0ca62335dc98');
-    A = [1, 0, 2]
-    checkanswer.eq_vector(A, '6601896bef296de2c6ea0ca62335dc98');
-    
-def test_vector_sympy():
-    A = sym.Matrix([[1.0, 0.0, 2.0]])
-    checkanswer.eq_vector(A, '6601896bef296de2c6ea0ca62335dc98');
-    
+    checkanswer.vector(A, 'be281882fcabe04f0c880b70169814cd');
+
 def test_vector_negative_zero():
     A = np.matrix([1.0, -0.0, 2.44])
-    checkanswer.eq_vector(A, 'adc7e01b8bd1778081f6ee348b5eac8c');
+    checkanswer.vector(A, 'be281882fcabe04f0c880b70169814cd');
+
+def test_vector_negative_zero():
+    A = np.matrix([1.0, -0.0, 2.44])
+    checkanswer.vector(A, 'be281882fcabe04f0c880b70169814cd');
+
+def test_vector_int():
+    A = [1.0, 0.0, 2.0]
+    checkanswer.eq_vector(A, '01ae20900734994659fa6cb57e3616ff');
+    A = [1, 0, 2]
+    checkanswer.eq_vector(A, '01ae20900734994659fa6cb57e3616ff');
+
+def test_vector_sympy():
+    A = sym.Matrix([[1.0, 0.0, 2.0]])
+    checkanswer.eq_vector(A, '01ae20900734994659fa6cb57e3616ff');
     
 def test_vector_float_error():
     A = np.matrix([[3.0, 0.0, 0.0, 10.0]])

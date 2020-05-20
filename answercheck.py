@@ -89,6 +89,12 @@ class checkanswer():
             CheckWarning: numpy.matrix is row vector...
                 Trying to convert to a column vector using ```A = A.T```.\n"""))
             A = A.T
+        A = np.round(A, decimals=decimal_accuracy)
+        if not A[A == -0].size == 0:
+            printwarning(textwrap.dedent(f"""
+            CheckWarning: Vector contains negative values for zero...
+                Converting to positive values of zero using  ```A[A==-0] = 0```.\n"""))
+            A[A == -0] = 0.00
         return A
     
     def vector(A, hashtag=None):
@@ -97,7 +103,7 @@ class checkanswer():
     
     def eq_vector(A, hashtag=None):
         A = checkanswer.make_vector(A)
-        vecsum = A.sum()
+        vecsum = np.sqrt(np.sum(np.dot(A,A.T)))
         if not vecsum == 1:
             printwarning(textwrap.dedent(f"""
             CheckWarning: Vector sum of {A} has total value of {vecsum}...
@@ -110,12 +116,12 @@ class checkanswer():
                 Trying to normalize by making this value positive using ```A = -A```.\n"""))
             A = -A
 #         A = np.matrix(A).astype(float)
-        A = np.round(A, decimals=decimal_accuracy)
-        if not A[A == -0].size == 0:
-            printwarning(textwrap.dedent(f"""
-            CheckWarning: Vector contains negative values for zero...
-                Converting to positive values of zero using  ```A[A==-0] = 0```.\n"""))
-            A[A == -0] = 0.00
+#        A = np.round(A, decimals=decimal_accuracy)
+#        if not A[A == -0].size == 0:
+#            printwarning(textwrap.dedent(f"""
+#            CheckWarning: Vector contains negative values for zero...
+#                Converting to positive values of zero using  ```A[A==-0] = 0```.\n"""))
+#            A[A == -0] = 0.00
         return checkanswer.basic(A, hashtag)
 
     def matrix(A, hashtag=None):
