@@ -123,8 +123,7 @@ class checkanswer():
         A[A == -0] = 0.00
         return checkanswer.basic(A, hashtag)
 
-    def matrix(A, hashtag=None):
-        """Function to check matrix type before hashing."""
+    def make_matrix(A):
         if(type(A) is not np.matrix):
             printwarning(textwrap.dedent(f"""
             CheckWarning: passed variable is {type(A)} and not a numpy.matrix...
@@ -141,19 +140,20 @@ class checkanswer():
             CheckWarning: Matrix contains negative values for zero...
                 Converting to positive values of zero using  ```A[A==-0] = 0```.\n"""))
             A[A == -0] = 0.00
+        return A
+    
+    def matrix(A, hashtag=None):
+        """Function to check matrix type before hashing."""
+        A = checkanswer.make_matrix(A)
         return checkanswer.basic(A, hashtag)
 
     # TODO: Not complete or tested.
-    def matrix_equivelent(A, hashtag=None):
+    def eq_matrix(A, hashtag=None):
         """Function to convert matrix to reduced row echelon form
         and then run hashing."""
-        if(type(A) is not np.matrix):
-            printwarning(textwrap.dedent(f"""
-            CheckWarning: passed variable is {type(A)} and not a numpy.matrix.
-            Trying to convert to a numpy matrix using ```A = np.matrix(A).astype(float)```.\n"""))
-            A = np.matrix(A).astype(float)
-            A = np.round(A, decimals=decimal_accuracy)
+        A = checkanswer.make_matrix(A)
         symA = sym.Matrix(A)
         symA = symA.rref()[0]
-        A = np.matrix(symA).asfloat(float)
+        A = np.matrix(symA)
+        A = checkanswer.make_matrix(A)
         return checkanswer.basic(A, hashtag)
