@@ -4,7 +4,7 @@ import sympy as sym
 import sys
 import textwrap
 
-decimal_accuracy = 5
+
 # detailedwarnings = True
 
 # Things I fixed. Fixed Matrix rounding error
@@ -47,7 +47,7 @@ class checkanswer():
         else:
             raise TypeError(f"No answer hastag provided: {checktag}")
 
-    def float(A, hashtag=None):
+    def float(A, hashtag=None, decimal_accuracy = 5):
         """Function to check matrix type before hashing."""
         if(type(A) is not float):
             if(type(A) is list):
@@ -69,7 +69,7 @@ class checkanswer():
             A = 0.00
         return checkanswer.basic(A, hashtag)
 
-    def make_vector(A):
+    def make_vector(A, decimal_accuracy = 5):
         """Function to check matrix type before hashing."""
         if(type(A) is not np.matrix):
             printwarning(textwrap.dedent(f"""
@@ -97,12 +97,12 @@ class checkanswer():
             A[A == -0] = 0.00
         return A
     
-    def vector(A, hashtag=None):
-        A = checkanswer.make_vector(A)
+    def vector(A, hashtag=None, decimal_accuracy = 5):
+        A = checkanswer.make_vector(A, decimal_accuracy)
         return checkanswer.basic(A, hashtag)
     
-    def eq_vector(A, hashtag=None):
-        A = checkanswer.make_vector(A)
+    def eq_vector(A, hashtag=None, decimal_accuracy = 5):
+        A = checkanswer.make_vector(A, decimal_accuracy)
         vecsum = np.sqrt(np.sum(np.dot(A,A.T)))
         if not vecsum == 1:
             printwarning(textwrap.dedent(f"""
@@ -123,7 +123,7 @@ class checkanswer():
         A[A == -0] = 0.00
         return checkanswer.basic(A, hashtag)
 
-    def make_matrix(A):
+    def make_matrix(A, decimal_accuracy = 5):
         if(type(A) is not np.matrix):
             printwarning(textwrap.dedent(f"""
             CheckWarning: passed variable is {type(A)} and not a numpy.matrix...
@@ -142,16 +142,16 @@ class checkanswer():
             A[A == -0] = 0.00
         return A
     
-    def matrix(A, hashtag=None):
+    def matrix(A, hashtag=None, decimal_accuracy = 5):
         """Function to check matrix type before hashing."""
-        A = checkanswer.make_matrix(A)
+        A = checkanswer.make_matrix(A, decimal_accuracy)
         return checkanswer.basic(A, hashtag)
 
     # TODO: Not complete or tested.
-    def eq_matrix(A, hashtag=None):
+    def eq_matrix(A, hashtag=None, decimal_accuracy = 5):
         """Function to convert matrix to reduced row echelon form
         and then run hashing."""
-        A = checkanswer.make_matrix(A)
+        A = checkanswer.make_matrix(A, decimal_accuracy)
         symA = sym.Matrix(A)
         symA = symA.rref()[0]
         A = np.matrix(symA)
