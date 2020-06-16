@@ -68,3 +68,4 @@ A = np.matrix([[4,0],[0,100]])*A
 checkanswer.eq_matrix(A, 'b975df4d16100051030dab90f432b14b')
 
 ```
+[Link to Video](https://youtu.be/vKm9FKkcsJ4)
