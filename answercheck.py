@@ -12,11 +12,24 @@ import textwrap
 
 # TODO: Fix Printwarnings
 
-
 def printwarning(message):
     if checkanswer.detailedwarnings:
         print(message)
-
+        
+def hint(input_string, encode=False):
+    """Symple two way function to encode string as gibberish. This is not
+    secure but only intended to give students hints or answers if they are stuck."""
+    
+    if encode:
+        message_bytes = input_string.encode('ascii')
+        base64_bytes = base64.b64encode(message_bytes)
+        base64_message = base64_bytes.decode('ascii')
+        print(f"hint(\"{base64_message}\")")
+    else:
+        base64_bytes = input_string.encode('ascii')
+        message_bytes = base64.b64decode(base64_bytes)
+        message = message_bytes.decode('ascii')
+        print(f"{message}")
 
 class checkanswer():
     detailedwarnings = True
@@ -24,6 +37,8 @@ class checkanswer():
     def __init__(self, var, hashtag=None):
         checkanswer.basic(var, hashtag)
 
+
+        
     def basic(var, hashtag=None):
         """Fuanction that encodes answers in a string called a Hash.
         This is a one way function so a correct answer will generate the
