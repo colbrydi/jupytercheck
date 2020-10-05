@@ -29,7 +29,11 @@ class checkanswer():
         This is a one way function so a correct answer will generate the
         correct has. An incorrect answer will generate an incorrect hash."""
 
-        print(f"Testing {var}")
+        if checkanswer.detailedwarnings:
+            print(f"Testing {var}")
+        else:
+            print(f"Testing Answer")
+            
         curr_printopts = np.get_printoptions()
         np.set_printoptions(threshold=sys.maxsize)
         varstr = f"{var}"
